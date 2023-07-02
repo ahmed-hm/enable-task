@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import { AuthModule } from './modules/auth/auth.module';
+import { JWTGuard } from './modules/auth/guards/jwt.guard';
 import { UserModule } from './modules/user/user.module';
+import { GlobalHandler } from './shared/exception-handlers';
 
 @Module({
   imports: [
@@ -19,6 +23,11 @@ import { UserModule } from './modules/user/user.module';
       },
     }),
     UserModule,
+    AuthModule,
+  ],
+  providers: [
+    { provide: APP_FILTER, useClass: GlobalHandler },
+    { provide: APP_GUARD, useClass: JWTGuard },
   ],
 })
 export class AppModule {}
