@@ -8,11 +8,11 @@ export const UserModelName = User.name;
 export interface IUserModel extends Model<User> {}
 export const UserSchema = new Schema<User>(
   {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: false },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
-    username: { type: String, required: true },
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, required: false, trim: true },
+    email: { type: String, required: true, lowercase: true, trim: true },
+    password: { type: String, required: true, trim: true, select: false },
+    username: { type: String, required: true, lowercase: true, trim: true },
     manager: { type: Schema.Types.ObjectId, ref: UserModelName },
   },
   { timestamps: true },
