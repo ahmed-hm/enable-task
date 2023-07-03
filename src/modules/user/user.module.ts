@@ -10,6 +10,6 @@ const UserMongooseDynamicModule = MongooseModule.forFeature([{ name: UserModelNa
   imports: [UserMongooseDynamicModule],
   controllers: [UserController],
   providers: [UserService],
-  exports: [UserService],
+  exports: [UserService, UserMongooseDynamicModule],
 })
 export class UserModule {}
