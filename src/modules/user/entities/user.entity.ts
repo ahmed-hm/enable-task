@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 import { TransformObjectId } from 'src/shared/decorators';
@@ -20,9 +21,11 @@ export class User extends BaseEntity {
   @IsString()
   username: string;
 
+  @ApiProperty({ type: String, format: 'ObjectId' })
   @TransformObjectId()
   manager: Types.ObjectId;
 
+  @ApiProperty({ type: String, format: 'ObjectId' })
   @TransformObjectId()
   department: Types.ObjectId;
 }

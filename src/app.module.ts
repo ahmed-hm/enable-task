@@ -1,12 +1,15 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
-import { MongooseModule } from '@nestjs/mongoose';
+import { InjectModel, MongooseModule } from '@nestjs/mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { AuthModule } from './modules/auth/auth.module';
 import { JWTGuard } from './modules/auth/guards/jwt.guard';
+import { IUserModel, USER_MODEL_NAME } from './modules/user/schema/user.schema';
 import { UserModule } from './modules/user/user.module';
 import { GlobalHandler } from './shared/exception-handlers';
+import { seedUsers } from './shared/seed/seed';
+import { RoleModule } from './modules/role/role.module';
 
 @Module({
   imports: [
@@ -15,7 +18,7 @@ import { GlobalHandler } from './shared/exception-handlers';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         const mongod = await MongoMemoryServer.create({
-          instance: { port: configService.get('MONGODB_IN_MEMORY_PORT') },
+          instance: { port: +configService.get('MONGODB_IN_MEMORY_PORT') },
         });
         const uri = mongod.getUri();
 
@@ -24,10 +27,19 @@ import { GlobalHandler } from './shared/exception-handlers';
     }),
     UserModule,
     AuthModule,
+    RoleModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: GlobalHandler },
     { provide: APP_GUARD, useClass: JWTGuard },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  logger = new Logger(AppModule.name);
+
+  constructor(@InjectModel(USER_MODEL_NAME) private userModel: IUserModel) {
+    this.logger.log('starting user seed');
+    seedUsers(this.userModel);
+    this.logger.log('finished user seed');
+  }
+}
