@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserModelName, UserSchema } from './schema/user.schema';
+import { UserModelName, UserSchemaFactory } from './schema/user.schema';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
-const UserMongooseDynamicModule = MongooseModule.forFeature([{ name: UserModelName, schema: UserSchema }]);
+const UserMongooseDynamicModule = MongooseModule.forFeature([{ name: UserModelName, schema: UserSchemaFactory() }]);
 
 @Module({
   imports: [UserMongooseDynamicModule],
