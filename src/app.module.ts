@@ -5,10 +5,11 @@ import { InjectModel, MongooseModule } from '@nestjs/mongoose';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import { AuthModule } from './modules/auth/auth.module';
 import { JWTGuard } from './modules/auth/guards/jwt.guard';
-import { IUserModel, UserModelName } from './modules/user/schema/user.schema';
+import { IUserModel, USER_MODEL_NAME } from './modules/user/schema/user.schema';
 import { UserModule } from './modules/user/user.module';
 import { GlobalHandler } from './shared/exception-handlers';
 import { seedUsers } from './shared/seed/seed';
+import { RoleModule } from './modules/role/role.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { seedUsers } from './shared/seed/seed';
     }),
     UserModule,
     AuthModule,
+    RoleModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: GlobalHandler },
@@ -35,7 +37,7 @@ import { seedUsers } from './shared/seed/seed';
 export class AppModule {
   logger = new Logger(AppModule.name);
 
-  constructor(@InjectModel(UserModelName) private userModel: IUserModel) {
+  constructor(@InjectModel(USER_MODEL_NAME) private userModel: IUserModel) {
     this.logger.log('starting user seed');
     seedUsers(this.userModel);
     this.logger.log('finished user seed');

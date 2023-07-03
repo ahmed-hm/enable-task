@@ -4,7 +4,7 @@ import { validate } from 'class-validator';
 import { Model, Schema } from 'mongoose';
 import { User } from '../entities/user.entity';
 
-export const UserModelName = User.name;
+export const USER_MODEL_NAME = User.name;
 export interface IUserModel extends Model<User> {}
 export const UserSchema = new Schema<User>(
   {
@@ -13,12 +13,12 @@ export const UserSchema = new Schema<User>(
     email: { type: String, required: true, lowercase: true, trim: true },
     password: { type: String, required: true, trim: true, select: false },
     username: { type: String, required: true, lowercase: true, trim: true },
-    manager: { type: Schema.Types.ObjectId, ref: UserModelName },
+    manager: { type: Schema.Types.ObjectId, ref: USER_MODEL_NAME },
   },
   { timestamps: true },
 );
 
-export function UserSchemaFactory(): Schema {
+export function userSchemaFactory(): Schema {
   UserSchema.index({ email: 1 }, { unique: true });
   UserSchema.index({ username: 1 }, { unique: true });
   UserSchema.index({ manager: 1 });
