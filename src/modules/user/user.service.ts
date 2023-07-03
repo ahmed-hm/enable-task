@@ -6,11 +6,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { FindAllUsersDto } from './dto/find-all-users.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { IUserModel, UserModelName } from './schema/user.schema';
+import { IUserModel, USER_MODEL_NAME } from './schema/user.schema';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(UserModelName) private readonly userModel: IUserModel) {}
+  constructor(@InjectModel(USER_MODEL_NAME) private readonly userModel: IUserModel) {}
 
   async create(createUserDto: CreateUserDto) {
     return this.userModel.create(createUserDto);
