@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { CustomResponsePayload } from 'src/shared/response';
@@ -26,18 +26,32 @@ export class UserService {
       this.userModel.countDocuments({ ...(search && { $text: { $search: search, $caseSensitive: false } }) }),
     ]);
 
-    return { page, pages: Math.ceil(total / limit), limit, total, data: docs.map((doc) => doc.toObject()) };
+    return { page, pages: Math.ceil(total / limit), limit, total, data: docs };
   }
 
   async findOne(id: Types.ObjectId) {
-    return this.userModel.findById(id);
+    const user = await this.userModel.findById(id);
+
+    if (!user) {
+      throw new NotFoundException({
+        message: 'User not found',
+        errors: { id: 'User not found' },
+      });
+    }
+
+    return user;
   }
 
-  async findByEmail(email: string) {
-    return this.userModel.findOne({ email: email.toLowerCase() });
+  async findByEmail({ email, selectPassword = false, populateRole = false }) {
+    return this.userModel.findOne({ email: email.toLowerCase() }).select(selectPassword ? '+password' : undefined);
   }
 
   async update(id: Types.ObjectId, updateUserDto: UpdateUserDto) {
-    return this.userModel.findByIdAndUpdate(id, updateUserDto, { new: true });
+    const user = await this.findOne(id);
+
+    user.set(updateUserDto);
+    await user.save();
+
+    return user;
   }
 }
