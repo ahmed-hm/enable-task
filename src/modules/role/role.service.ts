@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 import { CustomResponsePayload } from 'src/shared/response';
@@ -25,18 +25,36 @@ export class RoleService {
       this.roleModel.countDocuments({ ...(role && { role }) }),
     ]);
 
-    return { page, pages: Math.ceil(total / limit), limit, total, data: docs.map((doc) => doc.toObject()) };
+    return { page, pages: Math.ceil(total / limit), limit, total, data: docs };
   }
 
   async findOne(id: Types.ObjectId) {
-    return this.roleModel.findById(id);
+    const role = this.roleModel.findById(id);
+
+    if (!role) {
+      throw new NotFoundException({
+        message: 'Role not found',
+        errors: { id: 'Role not found' },
+      });
+    }
+
+    return role;
   }
 
   async update(id: Types.ObjectId, { permission }: UpdateRoleDto) {
-    return this.roleModel.findByIdAndUpdate(id, { permission }, { new: true });
+    const role = await this.findOne(id);
+
+    role.set({ permission });
+    await role.save();
+
+    return role;
   }
 
   async remove(id: Types.ObjectId) {
-    return this.roleModel.findByIdAndDelete(id);
+    const role = await this.findOne(id);
+
+    await role.deleteOne();
+
+    return role;
   }
 }
