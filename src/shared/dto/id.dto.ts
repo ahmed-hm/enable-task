@@ -1,4 +1,9 @@
-import { PickType } from '@nestjs/swagger';
-import { BaseEntity } from '../entities';
+import { ApiProperty } from '@nestjs/swagger';
+import { Types } from 'mongoose';
+import { TransformObjectId } from '../decorators';
 
-export class IdDto extends PickType(BaseEntity, ['_id']) {}
+export class IdDto {
+  @ApiProperty({ type: String, format: 'ObjectId' })
+  @TransformObjectId()
+  id: Types.ObjectId;
+}

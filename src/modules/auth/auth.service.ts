@@ -15,10 +15,15 @@ export class AuthService {
   ) {}
 
   async signIn({ email, password }: SignInDto) {
-    const user = await this.userService.findByEmail(email);
+    const user = await this.userService.findByEmail({ email /* populateRole: true, selectPassword: true */ });
+
     await this.validatePassword(password, user);
 
-    const token = await this.generateToken(user);
+    await user.populate({
+      path: 'role',
+      select: 'type permission',
+    });
+    const token = await this.generateToken(user.toObject());
 
     return { user, token };
   }
@@ -35,7 +40,7 @@ export class AuthService {
 
   private async generateToken(user: User): Promise<string> {
     return this.jwtService.signAsync(
-      { email: user.email, _id: user._id },
+      { ...user, password: undefined },
       { expiresIn: '1d', secret: this.configService.get<string>('JWT_SECRET_KEY') },
     );
   }

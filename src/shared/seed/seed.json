@@ -1,25 +1,105 @@
 {
+  "role": [
+    {
+      "_id": "64a27b8af50be6424ede3df8",
+      "type": "SUPER_ADMIN",
+      "permission": {
+        "department": {
+          "create": true,
+          "read": true,
+          "update": true,
+          "delete": true
+        },
+        "user": {
+          "create": true,
+          "read": true,
+          "update": true,
+          "delete": true
+        },
+        "role": {
+          "create": true,
+          "read": true,
+          "update": true,
+          "delete": true
+        }
+      }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3df9",
+      "type": "DEPARTMENT_MANAGER",
+      "permission": {
+        "department": {
+          "create": false,
+          "read": true,
+          "update": true,
+          "delete": false
+        },
+        "user": {
+          "create": false,
+          "read": true,
+          "update": false,
+          "delete": false
+        },
+        "role": {
+          "create": false,
+          "read": false,
+          "update": false,
+          "delete": false
+        }
+      }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3dfa",
+      "type": "EMPLOYEE",
+      "permission": {
+        "department": {
+          "create": false,
+          "read": true,
+          "update": false,
+          "delete": false
+        },
+        "user": {
+          "create": false,
+          "read": true,
+          "update": false,
+          "delete": false
+        },
+        "role": {
+          "create": false,
+          "read": false,
+          "update": false,
+          "delete": false
+        }
+      }
+    }
+  ],
   "user": [
     {
+      "_id": "64a27b8af50be6424ede3dfb",
       "firstName": "John",
       "lastName": "Doe",
       "username": "JohnDoe",
       "email": "John@gmail.com",
-      "password": "123456"
+      "password": "123456",
+      "role": "64a27b8af50be6424ede3df8"
     },
     {
+      "_id": "64a27b8af50be6424ede3dfc",
       "firstName": "Jane",
       "lastName": "Doe",
       "username": "JaneDoe",
       "email": "Jane@gmail.com",
-      "password": "123456"
+      "password": "123456",
+      "role": "64a27b8af50be6424ede3df9"
     },
     {
+      "_id": "64a27b8af50be6424ede3dfd",
       "firstName": "Jack",
       "lastName": "Doe",
       "username": "JackDoe",
       "email": "Jack@gmail.com",
-      "password": "123456"
+      "password": "123456",
+      "role": "64a27b8af50be6424ede3dfa"
     }
   ]
 }
