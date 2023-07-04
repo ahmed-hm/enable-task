@@ -54,4 +54,12 @@ export class UserService {
 
     return user;
   }
+
+  async remove(id: Types.ObjectId) {
+    const user = await this.findOne(id);
+
+    await user.deleteOne();
+
+    return user;
+  }
 }

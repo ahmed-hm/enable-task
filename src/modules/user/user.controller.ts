@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { IdDto } from 'src/shared/dto';
 import { CustomResponse } from 'src/shared/response';
@@ -54,6 +54,17 @@ export class UserController {
     return new CustomResponse<User>({
       payload: { data: user },
       message: 'User updated successfully',
+    });
+  }
+
+  @Delete(':id')
+  @Permission({ resource: ResourceEnum.USER, resourceOperation: ResourceOperationEnum.DELETE })
+  async remove(@Param() { id }: IdDto): Promise<CustomResponse<User>> {
+    const user = await this.userService.remove(id);
+
+    return new CustomResponse<User>({
+      payload: { data: user },
+      message: 'User deleted successfully',
     });
   }
 }
