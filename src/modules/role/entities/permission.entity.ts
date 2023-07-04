@@ -5,13 +5,13 @@ import { ResourceOperation } from './resource-operation.entity';
 export class Permission implements Record<ResourceEnum, ResourceOperation> {
   @IsObject()
   @ValidateNested()
-  USER: ResourceOperation;
+  user: ResourceOperation;
 
   @IsObject()
   @ValidateNested()
-  ROLE: ResourceOperation;
+  role: ResourceOperation;
 
   @IsObject()
   @ValidateNested()
-  DEPARTMENT: ResourceOperation;
+  department: ResourceOperation;
 }
