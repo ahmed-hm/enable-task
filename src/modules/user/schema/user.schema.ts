@@ -2,6 +2,8 @@ import { UnprocessableEntityException } from '@nestjs/common';
 import { hash } from 'bcryptjs';
 import { validate } from 'class-validator';
 import { Model, Schema } from 'mongoose';
+import { ROLE_MODEL_NAME } from 'src/modules/role/schemas/role.schema';
+import { commonSchemaOptions } from 'src/shared/utils';
 import { User } from '../entities/user.entity';
 
 export const USER_MODEL_NAME = User.name;
@@ -11,11 +13,12 @@ export const UserSchema = new Schema<User>(
     firstName: { type: String, required: true, trim: true },
     lastName: { type: String, required: false, trim: true },
     email: { type: String, required: true, lowercase: true, trim: true },
-    password: { type: String, required: true, trim: true, select: false },
+    password: { type: String, required: true, trim: true },
     username: { type: String, required: true, lowercase: true, trim: true },
     manager: { type: Schema.Types.ObjectId, ref: USER_MODEL_NAME },
+    role: { type: Schema.Types.ObjectId, ref: ROLE_MODEL_NAME, required: true },
   },
-  { timestamps: true },
+  commonSchemaOptions,
 );
 
 export function userSchemaFactory(): Schema {

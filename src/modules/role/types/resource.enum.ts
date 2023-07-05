@@ -1,5 +1,5 @@
 export enum ResourceEnum {
-  USER = 'USER',
-  ROLE = 'ROLE',
-  DEPARTMENT = 'DEPARTMENT',
+  USER = 'user',
+  ROLE = 'role',
+  DEPARTMENT = 'department',
 }

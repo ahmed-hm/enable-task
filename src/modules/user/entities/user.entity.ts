@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsInstance, IsOptional, IsString } from 'class-validator';
 import { Types } from 'mongoose';
 import { TransformObjectId } from 'src/shared/decorators';
 import { BaseEntity } from 'src/shared/entities';
@@ -10,7 +10,7 @@ export class User extends BaseEntity {
 
   @IsString()
   @IsOptional()
-  lastName: string;
+  lastName?: string;
 
   @IsEmail()
   email: string;
@@ -22,10 +22,19 @@ export class User extends BaseEntity {
   username: string;
 
   @ApiProperty({ type: String, format: 'ObjectId' })
+  @IsOptional()
+  @IsInstance(Types.ObjectId)
   @TransformObjectId()
-  manager: Types.ObjectId;
+  manager?: Types.ObjectId;
 
   @ApiProperty({ type: String, format: 'ObjectId' })
+  @IsOptional()
+  @IsInstance(Types.ObjectId)
   @TransformObjectId()
-  department: Types.ObjectId;
+  department?: Types.ObjectId;
+
+  @ApiProperty({ type: String, format: 'ObjectId' })
+  @IsInstance(Types.ObjectId)
+  @TransformObjectId()
+  role: Types.ObjectId;
 }
