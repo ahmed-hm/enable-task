@@ -2,7 +2,7 @@ import { Body, Controller, Post } from '@nestjs/common';
 import { CustomResponse } from 'src/shared/response';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
-import { IsPublic } from './gaurds';
+import { IsPublic } from './decorators';
 
 @Controller('auth')
 export class AuthController {

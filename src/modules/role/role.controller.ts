@@ -4,7 +4,7 @@ import { HydratedDocumentFromSchema } from 'mongoose';
 import { IdDto } from 'src/shared/dto';
 import { CustomResponse } from 'src/shared/response';
 import { assertReturn } from 'src/shared/utils';
-import { Permission } from '../auth/gaurds';
+import { Permission } from '../auth/decorators';
 import { FindAllRolesDto } from './dto';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';

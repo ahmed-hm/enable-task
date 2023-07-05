@@ -4,7 +4,7 @@ import { DEPARTMENT_MODEL_NAME } from './department.schema';
 
 const subDepartmentSchema = new Schema<SubDepartment>(
   {
-    _id: { type: Schema.Types.ObjectId, required: true, ref: DEPARTMENT_MODEL_NAME },
+    _id: { type: Schema.Types.ObjectId, required: true, ref: () => DEPARTMENT_MODEL_NAME },
     name: { type: String, required: true, trim: true },
   },
   { _id: false },

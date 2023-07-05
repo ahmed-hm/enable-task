@@ -11,8 +11,7 @@ import { DEPARTMENT_MODEL_NAME, IDepartmentModel } from './modules/department/sc
 import { ROLE_MODEL_NAME } from './modules/role/constants';
 import { RoleModule } from './modules/role/role.module';
 import { IRoleModel } from './modules/role/schemas/role.schema';
-import { USER_MODEL_NAME } from './modules/user/schema/user.schema';
-import { IUserModel } from './modules/user/schema/user.schema';
+import { IUserModel, USER_MODEL_NAME } from './modules/user/schema/user.schema';
 import { UserModule } from './modules/user/user.module';
 import { GlobalHandler } from './shared/exception-handlers';
 import { seedAll } from './shared/seed/seed';

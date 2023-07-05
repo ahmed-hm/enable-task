@@ -4,7 +4,7 @@ import { HydratedDocumentFromSchema } from 'mongoose';
 import { DecodedJWT } from 'src/shared/decorators';
 import { IdDto, PaginationDto } from 'src/shared/dto';
 import { CustomResponse } from 'src/shared/response';
-import { Permission } from '../auth/gaurds';
+import { Permission } from '../auth/decorators';
 import { UserJWTToken } from '../auth/types';
 import { ResourceEnum, ResourceOperationEnum } from '../role/types';
 import { DepartmentService } from './department.service';

@@ -5,7 +5,7 @@ import { DecodedJWT } from 'src/shared/decorators';
 import { IdDto } from 'src/shared/dto';
 import { CustomResponse } from 'src/shared/response';
 import { assertReturn } from 'src/shared/utils';
-import { Permission } from '../auth/gaurds';
+import { Permission } from '../auth/decorators';
 import { UserJWTToken } from '../auth/types';
 import { ResourceEnum, ResourceOperationEnum } from '../role/types';
 import { CreateUserDto } from './dto/create-user.dto';
