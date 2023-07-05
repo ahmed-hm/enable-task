@@ -6,12 +6,16 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { AuthModule } from './modules/auth/auth.module';
 import { JWTGuard } from './modules/auth/guards/jwt.guard';
 import { PermissionGuard } from './modules/auth/guards/permission.guard';
+import { DepartmentModule } from './modules/department/department.module';
+import { DEPARTMENT_MODEL_NAME, IDepartmentModel } from './modules/department/schema/department.schema';
+import { ROLE_MODEL_NAME } from './modules/role/constants';
 import { RoleModule } from './modules/role/role.module';
-import { IRoleModel, ROLE_MODEL_NAME } from './modules/role/schemas/role.schema';
-import { IUserModel, USER_MODEL_NAME } from './modules/user/schema/user.schema';
+import { IRoleModel } from './modules/role/schemas/role.schema';
+import { USER_MODEL_NAME } from './modules/user/schema/user.schema';
+import { IUserModel } from './modules/user/schema/user.schema';
 import { UserModule } from './modules/user/user.module';
 import { GlobalHandler } from './shared/exception-handlers';
-import { seedRoles, seedUsers } from './shared/seed/seed';
+import { seedAll } from './shared/seed/seed';
 
 @Module({
   imports: [
@@ -30,6 +34,7 @@ import { seedRoles, seedUsers } from './shared/seed/seed';
     UserModule,
     AuthModule,
     RoleModule,
+    DepartmentModule,
   ],
   providers: [
     { provide: APP_FILTER, useClass: GlobalHandler },
@@ -43,17 +48,8 @@ export class AppModule {
   constructor(
     @InjectModel(USER_MODEL_NAME) private userModel: IUserModel,
     @InjectModel(ROLE_MODEL_NAME) private roleModel: IRoleModel,
+    @InjectModel(DEPARTMENT_MODEL_NAME) private departmentModel: IDepartmentModel,
   ) {
-    this.startSeed();
-  }
-
-  async startSeed() {
-    this.logger.log('starting role seed');
-    await seedRoles(this.roleModel);
-    this.logger.log('finished role seed');
-
-    this.logger.log('starting user seed');
-    await seedUsers(this.userModel);
-    this.logger.log('finished user seed');
+    seedAll(this.roleModel, this.userModel, this.departmentModel);
   }
 }
