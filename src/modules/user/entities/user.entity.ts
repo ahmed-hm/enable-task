@@ -1,7 +1,6 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsInstance, IsOptional, IsString } from 'class-validator';
-import { Types } from 'mongoose';
-import { TransformObjectId } from 'src/shared/decorators';
+import { IsEmail, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { SubDepartment } from 'src/modules/department/entities/sub-department.entity';
+import { SubRole } from 'src/modules/role/entities/sub-role.entity';
 import { BaseEntity } from 'src/shared/entities';
 
 export class User extends BaseEntity {
@@ -21,20 +20,17 @@ export class User extends BaseEntity {
   @IsString()
   username: string;
 
-  @ApiProperty({ type: String, format: 'ObjectId' })
   @IsOptional()
-  @IsInstance(Types.ObjectId)
-  @TransformObjectId()
-  manager?: Types.ObjectId;
+  @IsObject()
+  @ValidateNested()
+  managedDepartment?: SubDepartment;
 
-  @ApiProperty({ type: String, format: 'ObjectId' })
   @IsOptional()
-  @IsInstance(Types.ObjectId)
-  @TransformObjectId()
-  department?: Types.ObjectId;
+  @IsObject()
+  @ValidateNested()
+  department?: SubDepartment;
 
-  @ApiProperty({ type: String, format: 'ObjectId' })
-  @IsInstance(Types.ObjectId)
-  @TransformObjectId()
-  role: Types.ObjectId;
+  @IsObject()
+  @ValidateNested()
+  role: SubRole;
 }
