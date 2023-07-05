@@ -20,9 +20,7 @@ export class DepartmentController {
 
   @Post()
   @Permission({ resource: ResourceEnum.DEPARTMENT, resourceOperation: ResourceOperationEnum.CREATE })
-  async create(
-    @Body() createDepartmentDto: CreateDepartmentDto,
-  ): Promise<CustomResponse<HydratedDocumentFromSchema<DepartmentSchema>>> {
+  async create(@Body() createDepartmentDto: CreateDepartmentDto): Promise<CustomResponse<HydratedDocumentFromSchema<DepartmentSchema>>> {
     const payload = await this.departmentService.create(createDepartmentDto);
 
     return new CustomResponse<HydratedDocumentFromSchema<DepartmentSchema>>({
@@ -34,9 +32,7 @@ export class DepartmentController {
 
   @Get()
   @Permission({ resource: ResourceEnum.DEPARTMENT, resourceOperation: ResourceOperationEnum.READ })
-  async findAll(
-    @Query() paginationDto: PaginationDto,
-  ): Promise<CustomResponse<HydratedDocumentFromSchema<DepartmentSchema>[]>> {
+  async findAll(@Query() paginationDto: PaginationDto): Promise<CustomResponse<HydratedDocumentFromSchema<DepartmentSchema>[]>> {
     const payload = await this.departmentService.findAll(paginationDto);
 
     return new CustomResponse<HydratedDocumentFromSchema<DepartmentSchema>[]>({

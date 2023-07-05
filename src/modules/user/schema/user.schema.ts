@@ -8,7 +8,7 @@ import { commonSchemaOptions } from 'src/shared/utils';
 import { User } from '../entities/user.entity';
 
 export const USER_MODEL_NAME = User.name;
-export interface IUserModel extends Model<User> {}
+export type IUserModel = Model<User>;
 export type UserSchema = typeof UserSchema;
 const UserSchema = new Schema<User>(
   {

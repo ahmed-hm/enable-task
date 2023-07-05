@@ -9,7 +9,7 @@ export class JWTGuard extends AuthGuard('jwt') {
     super();
   }
 
-  handleRequest<TUser = any>(err: any, user: any, info: any, context: ExecutionContext, status?: any): TUser {
+  handleRequest<TUser = any>(err: any, user: any, info: any, context: ExecutionContext): TUser {
     const isPublic = this.reflector.get<boolean>(IS_PUBLIC_GUARD_KEY, context.getHandler());
 
     if (!isPublic && (err || !user)) {

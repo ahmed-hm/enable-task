@@ -6,7 +6,7 @@ import { Role } from '../entities/role.entity';
 import { RoleEnum } from '../types';
 import { PermissionSchema } from './permission.schema';
 
-export interface IRoleModel extends Model<Role> {}
+export type IRoleModel = Model<Role>;
 export type RoleSchema = typeof RoleSchema;
 const RoleSchema = new Schema<Role>(
   {
