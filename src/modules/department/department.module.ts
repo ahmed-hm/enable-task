@@ -5,9 +5,7 @@ import { DepartmentController } from './department.controller';
 import { DepartmentService } from './department.service';
 import { departmentSchemaFactory, DEPARTMENT_MODEL_NAME } from './schema/department.schema';
 
-const departmentMongooseModule = MongooseModule.forFeature([
-  { name: DEPARTMENT_MODEL_NAME, schema: departmentSchemaFactory() },
-]);
+const departmentMongooseModule = MongooseModule.forFeature([{ name: DEPARTMENT_MODEL_NAME, schema: departmentSchemaFactory() }]);
 
 @Module({
   imports: [departmentMongooseModule, forwardRef(() => UserModule)],

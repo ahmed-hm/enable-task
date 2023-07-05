@@ -1,8 +1,4 @@
-import { Role } from "src/modules/role/entities/role.entity";
+import { Role } from 'src/modules/role/entities/role.entity';
+import { User } from 'src/modules/user/entities/user.entity';
 
-export type UserJWTToken = {
-  _id: string;
-  email: string;
-  role: Role
-}
-  
+export type UserJWTToken = User & { role: Role };

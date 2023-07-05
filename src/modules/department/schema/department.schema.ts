@@ -5,7 +5,7 @@ import { USER_MODEL_NAME } from 'src/modules/user/schema/user.schema';
 import { Department } from '../entities/department.entity';
 
 export const DEPARTMENT_MODEL_NAME = Department.name;
-export interface IDepartmentModel extends Model<Department> {}
+export type IDepartmentModel = Model<Department>;
 export type DepartmentSchema = typeof departmentSchema;
 const departmentSchema = new Schema<Department>({
   name: { type: String, required: true, trim: true },
