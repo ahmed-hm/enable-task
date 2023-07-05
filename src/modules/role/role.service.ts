@@ -20,14 +20,14 @@ export class RoleService {
     return { data: role };
   }
 
-  async findAll({ limit, page, role }: FindAllRolesDto): Promise<CustomResponsePayload<HydratedDocumentFromSchema<RoleSchema>[]>> {
+  async findAll({ limit, page }: FindAllRolesDto): Promise<CustomResponsePayload<HydratedDocumentFromSchema<RoleSchema>[]>> {
     const [docs, total] = await Promise.all([
       this.roleModel
-        .find({ ...(role && { role }) })
+        .find()
         .skip((page - 1) * limit)
         .limit(limit)
         .sort('_id'),
-      this.roleModel.countDocuments({ ...(role && { role }) }),
+      this.roleModel.countDocuments(),
     ]);
 
     return { page, pages: Math.ceil(total / limit), limit, total, data: docs };
