@@ -9,7 +9,7 @@ export class CustomResponse<T = any> {
 }
 
 export class CustomResponsePayload<T = any> {
-  data: T | T[];
+  data: T;
   page?: number;
   pages?: number;
   limit?: number;

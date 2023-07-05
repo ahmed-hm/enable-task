@@ -2,7 +2,7 @@
   "role": [
     {
       "_id": "64a27b8af50be6424ede3df8",
-      "type": "SUPER_ADMIN",
+      "type": "SUPER ADMIN",
       "permission": {
         "department": {
           "create": true,
@@ -26,7 +26,7 @@
     },
     {
       "_id": "64a27b8af50be6424ede3df9",
-      "type": "DEPARTMENT_MANAGER",
+      "type": "DEPARTMENT MANAGER",
       "permission": {
         "department": {
           "create": false,
@@ -81,7 +81,7 @@
       "username": "JohnDoe",
       "email": "John@gmail.com",
       "password": "123456",
-      "role": "64a27b8af50be6424ede3df8"
+      "role": { "_id": "64a27b8af50be6424ede3df8", "type": "SUPER ADMIN" }
     },
     {
       "_id": "64a27b8af50be6424ede3dfc",
@@ -90,7 +90,9 @@
       "username": "JaneDoe",
       "email": "Jane@gmail.com",
       "password": "123456",
-      "role": "64a27b8af50be6424ede3df9"
+      "role": { "_id": "64a27b8af50be6424ede3df9", "type": "DEPARTMENT MANAGER" },
+      "managedDepartment": { "_id": "64a27b8af50be6424ede3e0a", "name": "IT" },
+      "department": { "_id": "64a27b8af50be6424ede3e0a", "name": "IT" }
     },
     {
       "_id": "64a27b8af50be6424ede3dfd",
@@ -99,7 +101,147 @@
       "username": "JackDoe",
       "email": "Jack@gmail.com",
       "password": "123456",
-      "role": "64a27b8af50be6424ede3dfa"
+      "role": { "_id": "64a27b8af50be6424ede3df9", "type": "DEPARTMENT MANAGER" },
+      "managedDepartment": { "_id": "64a27b8af50be6424ede3e0b", "name": "HR" },
+      "department": { "_id": "64a27b8af50be6424ede3e0b", "name": "HR" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3dfe",
+      "firstName": "Jill",
+      "lastName": "Doe",
+      "username": "JillDoe",
+      "email": "Jill@gmail.com",
+      "password": "123456",
+      "role": { "_id": "64a27b8af50be6424ede3df9", "type": "DEPARTMENT MANAGER" },
+      "managedDepartment": { "_id": "64a27b8af50be6424ede3e0c", "name": "Marketing" },
+      "department": { "_id": "64a27b8af50be6424ede3e0c", "name": "Marketing" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3dff",
+      "firstName": "James",
+      "lastName": "Doe",
+      "username": "JamesDoe",
+      "email": "James@gmail.com",
+      "password": "123456",
+      "role": { "_id": "64a27b8af50be6424ede3df9", "type": "DEPARTMENT MANAGER" },
+      "managedDepartment": { "_id": "64a27b8af50be6424ede3e0d", "name": "Finance" },
+      "department": { "_id": "64a27b8af50be6424ede3e0d", "name": "Finance" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e01",
+      "firstName": "John",
+      "lastName": "Smith",
+      "username": "JohnSmith",
+      "email": "john.smith@gmail.com",
+      "password": "abcdef",
+      "role": { "_id": "64a27b8af50be6424ede3dfa", "type": "EMPLOYEE" },
+      "department": { "_id": "64a27b8af50be6424ede3e0a", "name": "IT" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e02",
+      "firstName": "Sarah",
+      "lastName": "Johnson",
+      "username": "SarahJ",
+      "email": "sarah.johnson@gmail.com",
+      "password": "p@ssw0rd",
+      "role": { "_id": "64a27b8af50be6424ede3dfa", "type": "EMPLOYEE" },
+      "department": { "_id": "64a27b8af50be6424ede3e0a", "name": "IT" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e03",
+      "firstName": "Michael",
+      "lastName": "Brown",
+      "username": "MBrown",
+      "email": "michael.brown@gmail.com",
+      "password": "qwerty",
+      "role": { "_id": "64a27b8af50be6424ede3dfa", "type": "EMPLOYEE" },
+      "department": { "_id": "64a27b8af50be6424ede3e0a", "name": "IT" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e04",
+      "firstName": "Emily",
+      "lastName": "Davis",
+      "username": "EmilyD",
+      "email": "emily.davis@gmail.com",
+      "password": "password123",
+      "role": { "_id": "64a27b8af50be6424ede3dfa", "type": "EMPLOYEE" },
+      "department": { "_id": "64a27b8af50be6424ede3e0a", "name": "IT" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e05",
+      "firstName": "David",
+      "lastName": "Wilson",
+      "username": "DavidW",
+      "email": "david.wilson@gmail.com",
+      "password": "ilovecoding",
+      "role": { "_id": "64a27b8af50be6424ede3dfa", "type": "EMPLOYEE" },
+      "department": { "_id": "64a27b8af50be6424ede3e0b", "name": "HR" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e06",
+      "firstName": "Jessica",
+      "lastName": "Taylor",
+      "username": "JessT",
+      "email": "jessica.taylor@gmail.com",
+      "password": "abc123",
+      "role": { "_id": "64a27b8af50be6424ede3dfa", "type": "EMPLOYEE" },
+      "department": { "_id": "64a27b8af50be6424ede3e0c", "name": "Marketing" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e07",
+      "firstName": "Christopher",
+      "lastName": "Anderson",
+      "username": "ChrisA",
+      "email": "chris.anderson@gmail.com",
+      "password": "pass1234",
+      "role": { "_id": "64a27b8af50be6424ede3dfa", "type": "EMPLOYEE" },
+      "department": { "_id": "64a27b8af50be6424ede3e0c", "name": "Marketing" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e08",
+      "firstName": "Olivia",
+      "lastName": "Martinez",
+      "username": "OliviaM",
+      "email": "olivia.martinez@gmail.com",
+      "password": "hello123",
+      "role": { "_id": "64a27b8af50be6424ede3dfa", "type": "EMPLOYEE" },
+      "department": { "_id": "64a27b8af50be6424ede3e0d", "name": "Finance" }
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e09",
+      "firstName": "William",
+      "lastName": "Clark",
+      "username": "WClark",
+      "email": "william.clark@gmail.com",
+      "password": "welcome",
+      "role": { "_id": "64a27b8af50be6424ede3dfa", "type": "EMPLOYEE" },
+      "department": { "_id": "64a27b8af50be6424ede3e0d", "name": "Finance" }
+    }
+  ],
+  "department": [
+    {
+      "_id": "64a27b8af50be6424ede3e0a",
+      "name": "IT",
+      "description": "IT Department",
+      "manager": "64a27b8af50be6424ede3dfc"
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e0b",
+      "name": "HR",
+      "description": "Human Resources Department",
+      "manager": "64a27b8af50be6424ede3dfd"
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e0c",
+      "name": "Marketing",
+      "description": "Marketing Department",
+      "manager": "64a27b8af50be6424ede3dfe"
+    },
+    {
+      "_id": "64a27b8af50be6424ede3e0d",
+      "name": "Finance",
+      "description": "Finance Department",
+      "manager": "64a27b8af50be6424ede3dff"
     }
   ]
 }

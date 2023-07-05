@@ -1,4 +1,3 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { IsDate, IsOptional } from 'class-validator';
 import { Types } from 'mongoose';
 import { TransformObjectId } from '../decorators';
@@ -8,7 +7,6 @@ export class BaseEntity<T = any> {
     Object.assign(this, partial);
   }
 
-  @ApiProperty({ type: String, format: 'ObjectId' })
   @TransformObjectId()
   _id: Types.ObjectId;
 
