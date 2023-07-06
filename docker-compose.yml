@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongodb
+    environment:
+      - NODE_ENV=stg
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+
+networks:
+  default:
+    name: app-network
