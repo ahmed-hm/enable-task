@@ -21,7 +21,7 @@ export class DepartmentService {
   async create(createDepartmentDto: CreateDepartmentDto): Promise<CustomResponsePayload<HydratedDocumentFromSchema<DepartmentSchema>>> {
     const department = await this.departmentModel.create(createDepartmentDto);
 
-    await this.updateManager({ newDepartment: CreateDepartmentDto });
+    await this.updateManager({ newDepartment: department });
 
     return { data: department };
   }
@@ -31,7 +31,7 @@ export class DepartmentService {
       this.departmentModel
         .find()
         .limit(limit)
-        .skip(limit * page),
+        .skip(limit * (page - 1)),
       this.departmentModel.countDocuments(),
     ]);
 
@@ -58,7 +58,7 @@ export class DepartmentService {
   ): Promise<CustomResponsePayload<HydratedDocumentFromSchema<DepartmentSchema>>> {
     const { data: department } = await this.findOne(id);
 
-    if (user.role.type !== RoleEnum.SUPER_ADMIN && user.department.toString() !== department._id.toString()) {
+    if (user.role.type !== RoleEnum.SUPER_ADMIN && user.managedDepartment?.toString() !== department._id.toString()) {
       throw new ForbiddenException({
         message: 'You are not allowed to update this department',
         errors: { id: 'You are not allowed to update this department' },
@@ -90,17 +90,17 @@ export class DepartmentService {
     newDepartment = null,
     oldDepartment = null,
   }: {
-    newDepartment?: UpdateDepartmentDto;
+    newDepartment?: Partial<HydratedDocumentFromSchema<DepartmentSchema>>;
     oldDepartment?: HydratedDocumentFromSchema<DepartmentSchema>;
   }) {
     const [{ data: newManager } = { data: null }, { data: oldManager } = { data: null }] = await Promise.all([
-      this.userService.findOne(newDepartment.manager),
-      this.userService.findOne(oldDepartment.manager),
+      this.userService.findOne(newDepartment?.manager),
+      this.userService.findOne(oldDepartment?.manager),
     ]);
 
     if (newDepartment && !newManager) throw new NotFoundException({ message: 'Manager not found', errors: { manager: 'Manager not found' } });
 
-    newManager?.set({ managedDepartment: { name: newDepartment.name, _id: oldDepartment._id } });
+    newManager?.set({ managedDepartment: { name: newDepartment.name, _id: newDepartment._id } });
     oldManager?.set({ managedDepartment: null });
 
     await Promise.all([newManager?.save(), oldManager?.save()]);

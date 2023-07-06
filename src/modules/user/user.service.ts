@@ -26,6 +26,9 @@ export class UserService {
       await this.updateDepartmentManager({ newManager: user, departmentId: managedDepartment._id });
     }
 
+    user.set({ managedDepartment });
+    await user.save();
+
     return { data: user };
   }
 
@@ -104,10 +107,6 @@ export class UserService {
     return { data: user };
   }
 
-  async findByRole(roleId: Types.ObjectId): Promise<HydratedDocumentFromSchema<UserSchema>[]> {
-    return this.userModel.find({ role: roleId });
-  }
-
   private async updateDepartmentManager({
     newManager = null,
     departmentId = null,
@@ -119,8 +118,8 @@ export class UserService {
     department.set({ manager: newManager._id });
 
     const oldManager = await this.userModel.findById(department.manager._id);
-    oldManager.set({ managedDepartment: null });
+    oldManager?.set({ managedDepartment: null });
 
-    await Promise.all([oldManager.save(), department.save()]);
+    await Promise.all([oldManager?.save(), department.save()]);
   }
 }
