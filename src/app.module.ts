@@ -22,12 +22,19 @@ import { seedAll } from './shared/seed/seed';
     MongooseModule.forRootAsync({
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        const mongod = await MongoMemoryServer.create({
-          instance: { port: +configService.get('MONGODB_IN_MEMORY_PORT') },
-        });
-        const uri = mongod.getUri();
+        const env = configService.get('NODE_ENV');
 
-        return { uri };
+        if (env === 'dev') {
+          const mongod = await MongoMemoryServer.create({
+            instance: { port: +configService.get('MONGODB_IN_MEMORY_PORT') },
+          });
+          const uri = mongod.getUri();
+
+          return { uri };
+        } else if (env === 'stg') {
+          const mongodbHost = configService.get('MONGODB_HOST');
+          return { uri: mongodbHost };
+        }
       },
     }),
     UserModule,
