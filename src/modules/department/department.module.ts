@@ -5,12 +5,12 @@ import { DepartmentController } from './department.controller';
 import { DepartmentService } from './department.service';
 import { departmentSchemaFactory, DEPARTMENT_MODEL_NAME } from './schema/department.schema';
 
-const departmentMongooseModule = MongooseModule.forFeature([{ name: DEPARTMENT_MODEL_NAME, schema: departmentSchemaFactory() }]);
+export const DepartmentMongooseModule = MongooseModule.forFeature([{ name: DEPARTMENT_MODEL_NAME, schema: departmentSchemaFactory() }]);
 
 @Module({
-  imports: [departmentMongooseModule, forwardRef(() => UserModule)],
+  imports: [DepartmentMongooseModule, forwardRef(() => UserModule)],
   controllers: [DepartmentController],
   providers: [DepartmentService],
-  exports: [departmentMongooseModule, DepartmentService],
+  exports: [DepartmentMongooseModule, DepartmentService],
 })
 export class DepartmentModule {}
