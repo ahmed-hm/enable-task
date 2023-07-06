@@ -2,7 +2,6 @@ import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { InjectModel, MongooseModule } from '@nestjs/mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 import { AuthModule } from './modules/auth/auth.module';
 import { JWTGuard } from './modules/auth/guards/jwt.guard';
 import { PermissionGuard } from './modules/auth/guards/permission.guard';
@@ -14,29 +13,14 @@ import { IRoleModel } from './modules/role/schemas/role.schema';
 import { IUserModel, USER_MODEL_NAME } from './modules/user/schema/user.schema';
 import { UserModule } from './modules/user/user.module';
 import { GlobalHandler } from './shared/exception-handlers';
+import { configSchema } from './shared/schemas/joi';
 import { seedAll } from './shared/seed/seed';
+import { mongooseFactory } from './shared/utils';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
-        const env = configService.get('NODE_ENV');
-
-        if (env === 'dev') {
-          const mongod = await MongoMemoryServer.create({
-            instance: { port: +configService.get('MONGODB_IN_MEMORY_PORT') },
-          });
-          const uri = mongod.getUri();
-
-          return { uri };
-        } else if (env === 'stg') {
-          const mongodbHost = configService.get('MONGODB_HOST');
-          return { uri: mongodbHost };
-        }
-      },
-    }),
+    ConfigModule.forRoot({ isGlobal: true, validationSchema: configSchema() }),
+    MongooseModule.forRootAsync({ inject: [ConfigService], useFactory: mongooseFactory }),
     UserModule,
     AuthModule,
     RoleModule,

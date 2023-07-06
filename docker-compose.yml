@@ -11,6 +11,7 @@ services:
       - mongodb
     environment:
       - NODE_ENV=stg
+      - MONGODB_HOST=mongodb://mongodb:27017/app
   mongodb:
     image: mongo
     restart: always
